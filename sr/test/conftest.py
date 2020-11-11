@@ -3,7 +3,8 @@ import flask_migrate
 import concurrent.futures as cf
 import os
 
-from sr import create_app, db
+from app import create_app
+from sr.db import db
 
 
 migrations_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'sr', 'migrations')

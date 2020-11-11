@@ -4,11 +4,11 @@ COPY Pipfile Pipfile.lock /tmp/pipenv/
 
 COPY ./ /flask
 
-WORKDIR /flask
+WORKDIR /flask/sr
 
 RUN apt update && \
-	apt install -y gcc libmariadbclient-dev && \
-	pip install pipenv && \
-	pipenv install
+    apt install -y gcc libmariadbclient-dev && \
+    pip install pipenv && \
+    pipenv install
 
 ENTRYPOINT ["bash"]

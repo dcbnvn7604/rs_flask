@@ -2,7 +2,7 @@ from flask import Flask
 import os
 from flask_migrate import Migrate
 
-from .models import db
+from sr.db import db
 
 
 def create_app():

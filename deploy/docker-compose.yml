@@ -5,7 +5,7 @@ services:
     build:
       context: ../
     environment:
-      FLASK_APP: sr
+      FLASK_APP: app.py
       FLASK_ENV: development
       SQLALCHEMY_DATABASE_URI: mysql://admin:abc%401234@mariadb/flask
       SQLALCHEMY_TEST_DATABASE_URI: mysql://root:abc%401234@mariadb/test_flask
