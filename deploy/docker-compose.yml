@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  flask:
+    build:
+      context: ../
+    environment:
+      FLASK_APP: sr
+      FLASK_ENV: development
+      SQLALCHEMY_DATABASE_URI: mysql://admin:abc%401234@mariadb/flask
+      SQLALCHEMY_TEST_DATABASE_URI: mysql://root:abc%401234@mariadb/test_flask
+    volumes:
+      - ../:/flask
+    depends_on:
+      - mariadb
+  mariadb:
+    image: mariadb:10.4.16
+    environment:
+      - MYSQL_ROOT_PASSWORD=abc@1234
+      - MYSQL_DATABASE=flask
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=abc@1234
+    volumes:
+      - ../../flask-mariadb:/var/lib/mysql
