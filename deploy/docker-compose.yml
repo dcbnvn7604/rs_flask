@@ -9,6 +9,8 @@ services:
       FLASK_ENV: development
       SQLALCHEMY_DATABASE_URI: mysql://admin:abc%401234@mariadb/flask
       SQLALCHEMY_TEST_DATABASE_URI: mysql://root:abc%401234@mariadb/test_flask
+      WTF_CSRF_SECRET_KEY: 'WTF_CSRF_SECRET_KEY'
+      SECRET_KEY: 'SECRET_KEY'
     volumes:
       - ../:/flask
     depends_on:

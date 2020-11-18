@@ -3,7 +3,8 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 import os
 
-from models import db
+from sr.db import db
+from sr.user.models import User
 
 
 app = Flask(__name__)

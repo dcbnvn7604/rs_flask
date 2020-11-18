@@ -15,6 +15,9 @@ def app():
     app = create_app()
     app.config['TESTING'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_TEST_DATABASE_URI')
+    app.config['WTF_CSRF_SECRET_KEY'] = 'WTF_CSRF_SECRET_KEY'
+    app.config['SECRET_KEY'] = 'SECRET_KEY'
+    app.config['WTF_CSRF_ENABLED'] = False
     return app
 
 

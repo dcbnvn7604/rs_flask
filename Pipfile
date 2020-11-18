@@ -12,6 +12,7 @@ flask-migrate = "*"
 bcrypt = "*"
 flask-script = "*"
 mysqlclient = "*"
+flask-wtf = "*"
 
 [requires]
 python_version = "3.7"

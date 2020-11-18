@@ -8,6 +8,9 @@ class UnauthorizedException(Exception):
 
 
 class User(db.Model):
+    USERNAME_LENGTH = 128
+    PASSWORD_LENGTH = 89
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(128), unique=True)
     password = db.Column(db.String(89))
@@ -32,3 +35,8 @@ class User(db.Model):
         hashed_password = bcrypt.hashpw(password.encode(), salt.encode())
         if hashed_password.decode() != bpassword[:60]:
             raise UnauthorizedException()
+
+
+    @classmethod
+    def exists(cls, username):
+        return bool(cls.query.filter_by(username=username).first())
