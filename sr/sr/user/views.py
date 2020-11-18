@@ -1,6 +1,6 @@
-from flask import Blueprint, request, render_template, redirect, url_for
+from flask import Blueprint, request, render_template, redirect, url_for, session, current_app
 
-from sr.user.forms import RegistrationForm
+from sr.user.forms import RegistrationForm, LoginForm
 from sr.user.models import User
 
 
@@ -21,4 +21,11 @@ def register():
 
 @blueprint.route('/login', methods=('GET', 'POST'))
 def login():
+    form = LoginForm()
+
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            user = User.authenticate(form.data['username'], form.data['password'])
+            return redirect(current_app.config['LOGIN_REDIRECT_URL'])
+
     return render_template('login.html')

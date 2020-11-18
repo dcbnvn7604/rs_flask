@@ -35,6 +35,7 @@ class User(db.Model):
         hashed_password = bcrypt.hashpw(password.encode(), salt.encode())
         if hashed_password.decode() != bpassword[:60]:
             raise UnauthorizedException()
+        return user
 
 
     @classmethod

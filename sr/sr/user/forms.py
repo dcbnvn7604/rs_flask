@@ -12,4 +12,9 @@ class RegistrationForm(FlaskForm):
 
     def validate_username(self, field):
         if User.exists(field.data):
-            raise ValidationError('username exists') 
+            raise ValidationError('username exists')
+
+
+class LoginForm(FlaskForm):
+    username = StringField('username', validators=[InputRequired(), Length(max=User.USERNAME_LENGTH)])
+    password = PasswordField('password', validators=[InputRequired(), Length(max=User.PASSWORD_LENGTH)])
