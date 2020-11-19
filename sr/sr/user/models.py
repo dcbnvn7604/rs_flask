@@ -1,10 +1,7 @@
 import bcrypt
 
 from sr.db import db
-
-
-class UnauthorizedException(Exception):
-    pass
+from sr.user.exceptions import UnauthenticatedException
 
 
 class User(db.Model):
@@ -34,7 +31,7 @@ class User(db.Model):
         salt = bpassword[60:]
         hashed_password = bcrypt.hashpw(password.encode(), salt.encode())
         if hashed_password.decode() != bpassword[:60]:
-            raise UnauthorizedException()
+            raise UnauthenticatedException()
         return user
 
 

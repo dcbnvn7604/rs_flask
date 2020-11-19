@@ -1,7 +1,9 @@
-from flask import Blueprint, request, render_template, redirect, url_for, session, current_app
+from flask import Blueprint, request, render_template, redirect, url_for, current_app
 
 from sr.user.forms import RegistrationForm, LoginForm
 from sr.user.models import User
+from sr.user.exceptions import UnauthenticatedException
+from sr.user.utils import authenticate_success
 
 
 blueprint = Blueprint('user', __name__, url_prefix='/user', template_folder='templates')
@@ -25,7 +27,11 @@ def login():
 
     if request.method == 'POST':
         if form.validate_on_submit():
-            user = User.authenticate(form.data['username'], form.data['password'])
-            return redirect(current_app.config['LOGIN_REDIRECT_URL'])
+            try:
+                user = User.authenticate(form.data['username'], form.data['password'])
+                authenticate_success(user)
+                return redirect(current_app.config['LOGIN_REDIRECT_URL'])
+            except UnauthenticatedException:
+                pass
 
     return render_template('login.html')

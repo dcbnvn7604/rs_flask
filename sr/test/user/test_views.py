@@ -1,4 +1,3 @@
-import pytest
 from urllib.parse import urlparse
 
 
@@ -14,4 +13,4 @@ def test_register_post(client, init_database):
 
     response = client.post('/user/login', data={'username': 'username1', 'password': 'password1'})
     assert response.status_code == 302
-    assert urlparse(response.location).path == '/'
+    assert urlparse(response.location).path == '/entry/list'

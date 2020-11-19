@@ -5,6 +5,7 @@ import os
 
 from sr.db import db
 from sr.user.models import User
+from sr.entry.models import Entry
 
 
 app = Flask(__name__)
