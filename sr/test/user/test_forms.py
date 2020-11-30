@@ -3,19 +3,7 @@ from werkzeug.datastructures import MultiDict
 
 from sr.user.forms import RegistrationForm, LoginForm
 from sr.user.models import User
-
-
-def generate_data(data, exclude=[], update={}):
-    _data = data.copy()
-    if exclude:
-        _data = {
-            key: _data[key]
-            for key in _data.keys()
-            if key not in exclude
-        }
-    if update:
-        _data.update(update)
-    return _data
+from test.utils import generate_data
 
 
 registraition_data = {
@@ -37,7 +25,7 @@ registraition_data = {
         ('password', generate_data(registraition_data, update={'repassword': 'password2'}), 'Field must be equal to repassword.'),
     ]
 )
-def test_registration_form_invalidate(field, data, error, app, init_database):
+def test_registration_form_invalid(field, data, error, app, init_database):
     with app.test_request_context('/'):
         form = RegistrationForm(MultiDict(data))
         assert form.validate() == False, "Field {} Error {}" % (field, error)
@@ -82,7 +70,7 @@ login_data = {
         ('password', generate_data(login_data, update={'password': 'a' * 90}), 'Field cannot be longer than 89 characters.'),
     ]
 )
-def test_login_form_invalidate(field, data, error, app):
+def test_login_form_invalid(field, data, error, app):
     with app.test_request_context('/'):
         form = LoginForm(MultiDict(data))
         assert form.validate() == False, "Field {} Error {}" % (field, error)

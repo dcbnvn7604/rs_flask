@@ -5,9 +5,12 @@ from sr.user.models import User
 
 
 class Entry(db.Model):
+    TITLE_LENGTH = 30
+    CONTENT_LENGTH = 100
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(30))
-    content = db.Column(db.String(100))
+    title = db.Column(db.String(TITLE_LENGTH))
+    content = db.Column(db.String(CONTENT_LENGTH))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref='entries', lazy=True) 
 

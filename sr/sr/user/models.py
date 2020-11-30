@@ -13,6 +13,10 @@ class User(db.Model):
     password = db.Column(db.String(89))
 
     @classmethod
+    def by_id(cls, id):
+        return cls.query.filter_by(id=id).first()
+
+    @classmethod
     def create(cls, username, password):
         salt = bcrypt.gensalt()
         hashed_password = bcrypt.hashpw(password.encode(), salt)

@@ -5,6 +5,7 @@ import os
 
 from app import create_app
 from sr.db import db
+from sr.user.models import User
 
 
 migrations_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'sr', 'migrations')
@@ -34,3 +35,13 @@ def init_database(app):
 def client(app):
     with app.test_client() as c:
         yield c
+
+
+@pytest.fixture
+def logined_user(client, init_database):
+    user = User.create('test', 'test1')
+
+    with client.session_transaction() as sess:
+        sess['user_id'] = user.id
+
+    yield user
