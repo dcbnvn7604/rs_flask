@@ -11,6 +11,7 @@ from sr.user.handlers import register_handler
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_TEST_DATABASE_URI')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['LOGIN_REDIRECT_URL'] = '/entry/list'
     app.register_blueprint(user_blueprint)
     app.register_blueprint(entry_blueprint)

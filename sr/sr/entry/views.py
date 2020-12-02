@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, session, redirect, url_fo
 
 from sr.entry.models import Entry
 from sr.entry.forms import EntryForm
-from sr.user.utils import login_required
+from sr.user.utils import login_required, has_permissions
 from sr.user.models import User
 
 
@@ -17,7 +17,7 @@ def list():
 
 
 @blueprint.route('/create', methods=['GET', 'POST'])
-@login_required
+@has_permissions(['entry.create'])
 def create():
     form = EntryForm()
 

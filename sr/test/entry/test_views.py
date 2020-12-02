@@ -18,7 +18,12 @@ def test_create_login_required(client):
     assert urlparse(response.location).path == '/user/login'
 
 
-def test_create(client, logined_user):
+def test_create_has_permission(client, logined_user):
+    response = client.get('/entry/create', follow_redirects=False)
+    assert response.status_code == 403
+
+
+def test_create(client, logined_user_with_permissions):
     response = client.post('/entry/create', data={'title': 'title 1', 'content': 'content 1'}, follow_redirects=False)
     assert response.status_code == 302
     assert urlparse(response.location).path == '/entry/list'

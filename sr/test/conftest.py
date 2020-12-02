@@ -5,10 +5,7 @@ import os
 
 from app import create_app
 from sr.db import db
-from sr.user.models import User
-
-
-migrations_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'sr', 'migrations')
+from sr.user.models import User, Permission
 
 
 @pytest.fixture
@@ -25,10 +22,10 @@ def app():
 @pytest.fixture
 def init_database(app):
     with app.app_context():
-        db.create_all()
+        flask_migrate.upgrade(revision='head')
         yield
         db.session.remove()
-        db.drop_all()
+        flask_migrate.downgrade(revision='base')
 
 
 @pytest.fixture
@@ -45,3 +42,10 @@ def logined_user(client, init_database):
         sess['user_id'] = user.id
 
     yield user
+
+
+@pytest.fixture
+def logined_user_with_permissions(logined_user):
+    logined_user.permissions = Permission.query.all()
+    db.session.commit()
+    yield logined_user
