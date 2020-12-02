@@ -28,3 +28,16 @@ def create():
             return redirect(url_for('entry.list'))
 
     return render_template('form.html')
+
+
+@blueprint.route('/<int:id>/update', methods=['GET', 'POST'])
+@has_permissions(['entry.update'])
+def update(id):
+    form = EntryForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            entry = Entry.by_id(id)
+            entry.update(form.data['title'], form.data['content'])
+            return redirect(url_for('entry.list'))
+
+    return render_template('form.html')

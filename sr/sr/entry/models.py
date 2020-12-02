@@ -24,3 +24,12 @@ class Entry(db.Model):
     @classmethod
     def list(cls):
         return cls.query.options(joinedload(cls.user)).all()
+
+    @classmethod
+    def by_id(cls, id):
+        return cls.query.get_or_404(id)
+
+    def update(self, title, content):
+        self.title = title
+        self.content = content
+        db.session.commit()
