@@ -1,3 +1,4 @@
+from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
 
 from sr.db import db
@@ -22,8 +23,12 @@ class Entry(db.Model):
         return entry
 
     @classmethod
-    def list(cls):
-        return cls.query.options(joinedload(cls.user)).all()
+    def search(cls, q=None):
+        query = cls.query.options(joinedload(cls.user))
+        if q is None:
+            return query.all()
+        criteria = '%%%s%%' % (q,)
+        return query.filter(or_(cls.title.like(criteria), cls.content.like(criteria))).all()
 
     @classmethod
     def by_id(cls, id):

@@ -12,7 +12,7 @@ blueprint = Blueprint('entry', __name__, url_prefix='/entry', template_folder='t
 @blueprint.route('/list', methods=['GET'])
 @login_required
 def list():
-    entries = Entry.list()
+    entries = Entry.search(request.args.get('q'))
     return render_template('list.html')
 
 
