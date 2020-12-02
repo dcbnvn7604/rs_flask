@@ -33,3 +33,7 @@ class Entry(db.Model):
         self.title = title
         self.content = content
         db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()

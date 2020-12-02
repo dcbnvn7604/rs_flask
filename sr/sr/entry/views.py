@@ -41,3 +41,11 @@ def update(id):
             return redirect(url_for('entry.list'))
 
     return render_template('form.html')
+
+
+@blueprint.route('/<int:id>/delete', methods=['POST'])
+@has_permissions(['entry.delete'])
+def delete(id):
+    entry = Entry.by_id(id)
+    entry.delete()
+    return redirect(url_for('entry.list'))
