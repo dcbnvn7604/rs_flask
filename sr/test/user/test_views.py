@@ -14,3 +14,9 @@ def test_register_post(client, init_database):
     response = client.post('/user/login', data={'username': 'username1', 'password': 'password1'})
     assert response.status_code == 302
     assert urlparse(response.location).path == '/entry/list'
+
+
+def test_logout(client):
+    response = client.get('/user/logout')
+    assert response.status_code == 302
+    assert urlparse(response.location).path == '/user/login'    

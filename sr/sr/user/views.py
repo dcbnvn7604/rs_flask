@@ -3,7 +3,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, curren
 from sr.user.forms import RegistrationForm, LoginForm
 from sr.user.models import User
 from sr.user.exceptions import UnauthenticatedException
-from sr.user.utils import authenticate_success
+from sr.user.utils import authenticate_success, deauthenticate
 
 
 blueprint = Blueprint('user', __name__, url_prefix='/user', template_folder='templates')
@@ -35,3 +35,9 @@ def login():
                 pass
 
     return render_template('login.html')
+
+
+@blueprint.route('/logout', methods=('GET', 'POST'))
+def logout():
+    deauthenticate()
+    return redirect(url_for('user.login'))

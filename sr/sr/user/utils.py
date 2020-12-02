@@ -8,6 +8,9 @@ from sr.user.models import User
 def authenticate_success(user):
     session['user_id'] = user.id
 
+def deauthenticate():
+    session.clear()
+
 
 def login_required(func):
     @wraps(func)
