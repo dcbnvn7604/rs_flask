@@ -38,7 +38,7 @@ class User(db.Model):
         user = cls.query.filter_by(username=username).first()
 
         if user is None:
-            raise UnauthorizedException()
+            raise UnauthenticatedException()
         bpassword = user.password
         salt = bpassword[60:]
         hashed_password = bcrypt.hashpw(password.encode(), salt.encode())

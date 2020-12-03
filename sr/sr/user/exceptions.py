@@ -4,3 +4,7 @@ class UnauthenticatedException(Exception):
 
 class UnauthorizedException(Exception):
     pass
+
+
+class APIUnauthenticatedException(Exception):
+    pass

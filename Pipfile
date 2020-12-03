@@ -13,6 +13,9 @@ bcrypt = "*"
 flask-script = "*"
 mysqlclient = "*"
 flask-wtf = "*"
+flask-restful = "*"
+flask-jwt-extended = "*"
+importlib-metadata = "<3"
 
 [requires]
 python_version = "3.7"

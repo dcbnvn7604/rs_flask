@@ -35,17 +35,21 @@ def client(app):
 
 
 @pytest.fixture
-def logined_user(client, init_database):
+def user(init_database):
     user = User.create('test', 'test1')
+    return user
 
+
+@pytest.fixture
+def logined_user(client, user):
     with client.session_transaction() as sess:
         sess['user_id'] = user.id
 
-    yield user
+    return user
 
 
 @pytest.fixture
 def logined_user_with_permissions(logined_user):
     logined_user.permissions = Permission.query.all()
     db.session.commit()
-    yield logined_user
+    return logined_user
