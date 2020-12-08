@@ -2,6 +2,7 @@ import pytest
 import flask_migrate
 import concurrent.futures as cf
 import os
+from flask_jwt_extended import create_access_token
 
 from app import create_app
 from sr.db import db
@@ -16,6 +17,7 @@ def app():
     app.config['WTF_CSRF_SECRET_KEY'] = 'WTF_CSRF_SECRET_KEY'
     app.config['SECRET_KEY'] = 'SECRET_KEY'
     app.config['WTF_CSRF_ENABLED'] = False
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
     return app
 
 
@@ -53,3 +55,8 @@ def logined_user_with_permissions(logined_user):
     logined_user.permissions = Permission.query.all()
     db.session.commit()
     return logined_user
+
+
+@pytest.fixture
+def token(user):
+    return create_access_token(user.username)

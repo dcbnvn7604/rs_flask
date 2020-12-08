@@ -7,6 +7,7 @@ from sr.db import db
 from sr.user.views import blueprint as user_blueprint
 from sr.user.resources import blueprint as user_api_blueprint
 from sr.entry.views import blueprint as entry_blueprint
+from sr.entry.resources import blueprint as entry_api_blueprint
 from sr.user.handlers import register_handler
 
 
@@ -21,6 +22,7 @@ def create_app():
     app.register_blueprint(user_blueprint)
     app.register_blueprint(user_api_blueprint)
     app.register_blueprint(entry_blueprint)
+    app.register_blueprint(entry_api_blueprint)
     db.init_app(app)
     register_handler(app)
 
