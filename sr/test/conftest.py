@@ -60,3 +60,10 @@ def logined_user_with_permissions(logined_user):
 @pytest.fixture
 def token(user):
     return create_access_token(user.username)
+
+
+@pytest.fixture
+def token_with_permisssions(user):
+    user.permissions = Permission.query.all()
+    db.session.commit()
+    return create_access_token(user.username)

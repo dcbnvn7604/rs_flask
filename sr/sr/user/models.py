@@ -24,6 +24,12 @@ class User(db.Model):
     def by_id(cls, id):
         return cls.query.filter_by(id=id).one()
 
+
+    @classmethod
+    def by_username(cls, username):
+        return cls.query.filter_by(username=username).one()
+
+
     @classmethod
     def create(cls, username, password):
         salt = bcrypt.gensalt()

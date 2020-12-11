@@ -8,3 +8,7 @@ class UnauthorizedException(Exception):
 
 class APIUnauthenticatedException(Exception):
     pass
+
+
+class APIUnauthorizedException(Exception):
+    pass
