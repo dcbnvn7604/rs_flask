@@ -4,7 +4,7 @@ from flask import Blueprint, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
-from sr.entry.models import Entry
+from sr.entry.models import Entry as EntryModel
 from sr.user.models import User
 from sr.user.utils import has_permissions_api
 
@@ -25,15 +25,25 @@ class EntryList(Resource):
     @jwt_required
     def get(self):
         args = list_parser.parse_args()
-        return json.dumps(Entry.search(args.get('q')))
+        return json.dumps(EntryModel.search(args.get('q')))
 
     @has_permissions_api(['entry.create'])
     def post(self):
         username = get_jwt_identity()
         user = User.by_username(username)
         args = create_parser.parse_args()
-        Entry.create(args['title'], args['content'], user)
+        EntryModel.create(args['title'], args['content'], user)
         return '', 201
 
 
+class Entry(Resource):
+    @has_permissions_api(['entry.update'])
+    def put(self, id):
+        entry = EntryModel.by_id(id)
+        args = create_parser.parse_args()
+        entry.update(args['title'], args['content'])
+        return '', 200
+
+
 api.add_resource(EntryList, '')
+api.add_resource(Entry, '/<int:id>')

@@ -66,4 +66,4 @@ def token(user):
 def token_with_permisssions(user):
     user.permissions = Permission.query.all()
     db.session.commit()
-    return create_access_token(user.username)
+    return create_access_token(user.username), user
