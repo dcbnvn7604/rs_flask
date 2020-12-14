@@ -42,7 +42,13 @@ class Entry(Resource):
         entry = EntryModel.by_id(id)
         args = create_parser.parse_args()
         entry.update(args['title'], args['content'])
-        return '', 200
+        return '', 201
+
+    @has_permissions_api(['entry.delete'])
+    def delete(self, id):
+        entry = EntryModel.by_id(id)
+        entry.delete()
+        return '', 201
 
 
 api.add_resource(EntryList, '')

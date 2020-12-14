@@ -46,4 +46,23 @@ def test_update(client, token_with_permisssions):
     Entry.create('title', 'content', token_with_permisssions[1])
     response = client.put('/api/entry/1', data={'title': 'title 1', 'content': 'content 1'}, headers={'Authorization': 'Bearer %s' % (token_with_permisssions[0],)})
 
-    assert response.status_code == 200
+    assert response.status_code == 201
+
+
+def test_delete_authentication(client):
+    response = client.delete('/api/entry/1')
+
+    assert response.status_code == 401
+
+
+def test_delete_has_permission(client, token):
+    response = client.delete('/api/entry/1', headers={'Authorization': 'Bearer %s' % (token,)})
+
+    assert response.status_code == 403
+
+
+def test_delete(client, token_with_permisssions):
+    Entry.create('title', 'content', token_with_permisssions[1])
+    response = client.delete('/api/entry/1', headers={'Authorization': 'Bearer %s' % (token_with_permisssions[0],)})
+
+    assert response.status_code == 201
